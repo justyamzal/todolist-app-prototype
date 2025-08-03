@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <input type="checkbox" class="task-checkbox" ${task.status === 'done' ? 'checked' : ''}>
                 <div class="task-content">
                     <p>${task.text}</p>
-                    <small class="due-date">Tenggat: ${new Date(task.dueDate).toLocaleDateString('id-ID', {day: '2-digit', month: 'long', year: 'numeric'})}</small>
+                    <small class="due-date">deadline : ${new Date(task.dueDate).toLocaleDateString('id-ID', {day: '2-digit', month: 'long', year: 'numeric'})}</small>
                 </div>
                 <div class="task-actions">
                     <button class="action-btn edit-btn" title="Edit Tugas">✏️</button>
