@@ -74,11 +74,59 @@ body {
 /* --- PERBAIKAN RESPONSIVE DENGAN CSS GRID --- */
 .form-controls {
     display: grid;
-    /* Definisikan kolom yang bisa beradaptasi */
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+        "priority label due"
+        "submit submit submit";
     align-items: center;
-    gap: 10px;
+    justify-items: stretch;
+    gap: 10px 12px;
+    margin-bottom: 5px;
 }
+
+#priority-input {
+    grid-area: priority;
+    width: 100%;
+    min-width: 0;
+}
+
+#deadline-label {
+    grid-area: label;
+    justify-self: end;
+    margin-right: 6px;
+    white-space: nowrap;
+}
+
+#due-date-input {
+    grid-area: due;
+    width: 100%;
+    min-width: 0;
+}
+
+.submit-btn {
+    grid-area: submit;
+    width: 100%;
+    margin-top: 5px;
+}
+
+/* Media query untuk tampilan mobile */
+@media (max-width: 600px) {
+    .form-controls {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "priority"
+            "label"
+            "due"
+            "submit";
+    }
+    #deadline-label {
+        justify-self: start;
+        margin-right: 0;
+        margin-bottom: 2px;
+    }
+}
+
 /* --- AKHIR PERBAIKAN --- */
 
 
@@ -89,6 +137,7 @@ body {
     border: 1px solid #ddd;
     font-size: 0.9rem;
     width: 100%; /* Pastikan input mengisi sel grid */
+    cursor: pointer;
 }
 
 /* Style untuk Bagian Filter */
@@ -121,6 +170,7 @@ body {
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ddd;
+    cursor: pointer;
 }
 
 .filter-controls button {
