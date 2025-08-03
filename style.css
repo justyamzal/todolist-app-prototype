@@ -325,7 +325,10 @@ body {
 .task-item.overdue {
     background-color: #fff0f0;
     border-left-color: #dc3545;
+    
 }
+
+
 .task-item.overdue .due-date {
     color: #dc3545;
     font-weight: bold;

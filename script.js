@@ -222,11 +222,16 @@ document.addEventListener('DOMContentLoaded', () => {
         today.setHours(0, 0, 0, 0); 
     
         document.querySelectorAll('.task-item').forEach(taskItem => {
-            const dueDate = new Date(taskItem.dataset.dueDate);
+            const dueDate = new Date(taskItem.dataset.dueDate);    
+             const dueDateElement = taskItem.querySelector('.due-date');
+         
+
             if (dueDate < today && !taskItem.classList.contains('done')) {
                 taskItem.classList.add('overdue');
+                dueDateElement.textContent = `${dueDateElement.textContent} (overdue)`;
             } else {
                 taskItem.classList.remove('overdue');
+                 dueDateElement.textContent = dueDateElement.textContent.replace(' (overdue)', '');
             }
         });
     }
