@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const deleteAllBtn = document.getElementById('delete-all-btn');
     const filterDateInput = document.getElementById('filter-date');
     const showAllBtn = document.getElementById('show-all-btn');
-    // Elemen baru untuk proses edit
     const taskEditIdInput = document.getElementById('task-edit-id');
     const submitTaskBtn = document.getElementById('submit-task-btn');
 
@@ -41,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
             taskItem.dataset.id = task.id;
             taskItem.dataset.dueDate = task.dueDate;
             
-            // Konten HTML sekarang menyertakan div .task-actions
             const taskContentHTML = `
                 <input type="checkbox" class="task-checkbox" ${task.status === 'done' ? 'checked' : ''}>
                 <div class="task-content">
@@ -79,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (editingId) {
-            // --- LOGIKA EDIT ---
             const taskIndex = tasks.findIndex(t => t.id == editingId);
             if (taskIndex > -1) {
                 tasks[taskIndex].text = taskText;
@@ -87,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 tasks[taskIndex].dueDate = dueDate;
             }
         } else {
-            // --- LOGIKA ADD ---
             const newTask = {
                 id: Date.now(),
                 text: taskText,
@@ -108,22 +104,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetForm() {
         todoForm.reset();
         dueDateInput.valueAsDate = new Date();
-        taskEditIdInput.value = ''; // Kosongkan ID edit
-        submitTaskBtn.textContent = 'Tambah Tugas'; // Kembalikan teks tombol
+        taskEditIdInput.value = '';
+        submitTaskBtn.textContent = 'Tambah Tugas';
         taskInput.focus();
     }
 
     // --- DIPERBARUI: Event listener utama untuk menangani semua aksi di list ---
-    // Menggunakan Event Delegation
     document.querySelector('.app-container').addEventListener('click', (event) => {
         const target = event.target;
         const taskItem = target.closest('.task-item');
 
-        if (!taskItem) return; // Jika klik bukan di dalam task-item, abaikan
+        if (!taskItem) return;
 
         const taskId = Number(taskItem.dataset.id);
 
-        // Aksi untuk Checkbox
         if (target.matches('.task-checkbox')) {
             const task = tasks.find(t => t.id === taskId);
             if (task) {
@@ -133,40 +127,40 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Aksi untuk Tombol Edit
         if (target.matches('.edit-btn')) {
             const taskToEdit = tasks.find(t => t.id === taskId);
             if (taskToEdit) {
-                // Isi form dengan data tugas yang akan diedit
                 taskEditIdInput.value = taskToEdit.id;
                 taskInput.value = taskToEdit.text;
                 priorityInput.value = taskToEdit.priority;
                 dueDateInput.value = taskToEdit.dueDate;
-                submitTaskBtn.textContent = 'Update Tugas'; // Ubah teks tombol
-                taskInput.focus(); // Fokus ke input teks
+                submitTaskBtn.textContent = 'Update Tugas';
+                taskInput.focus();
             }
         }
 
-        // Aksi untuk Tombol Delete
         if (target.matches('.delete-btn')) {
-            if (confirm('Apakah Anda yakin ingin menghapus tugas ini?')) {
+            taskItem.classList.add('removing');
+            
+            setTimeout(() => {
                 tasks = tasks.filter(t => t.id !== taskId);
                 saveTasks();
                 renderTasks();
-            }
+            }, 400);
         }
     });
 
-    // Fungsi untuk menghapus semua tugas tidak berubah.
+    // --- PERBAIKAN PADA FUNGSI "HAPUS SEMUA TUGAS" ---
     deleteAllBtn.addEventListener('click', () => {
-        if (confirm('Apakah kamu yakin ingin menghapus SEMUA tugas?')) {
-            tasks = [];
+        // Hapus dialog 'confirm()' agar bekerja di Live Preview
+        if (tasks.length > 0) {
+            tasks = []; // Langsung kosongkan array tugas
             saveTasks();
             renderTasks();
         }
     });
     
-    // --- FUNGSI INISIALISASI & FUNGSI BANTU LAINNYA (TIDAK BERUBAH) ---
+    // --- FUNGSI INISIALISASI & FUNGSI BANTU LAINNYA ---
     function initializeApp() {
         setupProfile();
         const savedTasks = localStorage.getItem('todo_tasks');
@@ -181,7 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     initializeApp();
 
-    // Fungsi-fungsi ini tidak diubah, jadi saya singkat untuk kejelasan.
     function setupProfile() {
         let userName = localStorage.getItem('todo_username') || 'Pengguna Baru';
         let userJob = localStorage.getItem('todo_userjob') || 'Pekerjaan';

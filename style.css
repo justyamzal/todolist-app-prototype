@@ -71,12 +71,16 @@ body {
     margin-bottom: 10px;
 }
 
+/* --- PERBAIKAN RESPONSIVE DENGAN CSS GRID --- */
 .form-controls {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    /* Definisikan kolom yang bisa beradaptasi */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     align-items: center;
     gap: 10px;
 }
+/* --- AKHIR PERBAIKAN --- */
+
 
 #priority-input,
 #due-date-input {
@@ -84,6 +88,7 @@ body {
     border-radius: 8px;
     border: 1px solid #ddd;
     font-size: 0.9rem;
+    width: 100%; /* Pastikan input mengisi sel grid */
 }
 
 /* Style untuk Bagian Filter */
@@ -103,6 +108,7 @@ body {
 .filter-controls {
     display: flex;
     align-items: center;
+    flex-wrap: wrap; /* Izinkan filter untuk wrap di layar kecil */
     gap: 15px;
 }
 
@@ -141,6 +147,7 @@ body {
     font-size: 1rem;
     font-weight: bold;
     transition: background-color 0.2s;
+    width: 100%; /* Pastikan tombol mengisi sel grid */
 }
 
 .submit-btn:hover {
@@ -176,11 +183,9 @@ body {
     margin-bottom: 10px;
     border-left: 5px solid #ccc;
     transition: all 0.3s;
-    /* Animasi saat item muncul */
     animation: fadeIn 0.4s ease-in-out;
 }
 
-/* --- STYLE BARU UNTUK ANIMASI DELETE --- */
 .task-item.removing {
     animation: fadeOut 0.4s ease-in-out forwards;
 }
@@ -206,8 +211,6 @@ body {
         transform: scale(0.95);
     }
 }
-/* --- AKHIR STYLE BARU --- */
-
 
 .task-item input[type="checkbox"] {
     margin-right: 15px;
