@@ -176,8 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
 
     function setupProfile() {
-        let userName = localStorage.getItem('todo_username') || 'Ilya Petrov'; // Default nama
-        let userJob = localStorage.getItem('todo_userjob') || 'Digital Marketing'; // Default pekerjaan
+        let userName = localStorage.getItem('todo_username') || 'Username'; // Default nama
+        let userJob = localStorage.getItem('todo_userjob') || 'Jobdesk'; // Default pekerjaan
         updateProfileDisplay(userName, userJob);
     }
     function askForProfileInfo() {
