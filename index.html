@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <header class="header" id="profile-header">
+            <div id="profile">
+                <h2 id="profile-name">Nama Pengguna</h2>
+                <p id="profile-job">Pekerjaan</p>
+            </div>
+            <div id="time-display">
+                <p>Memuat waktu...</p>
+            </div>
+        </header>
+
+        <main>
+            <form id="todo-form">
+                <h3>Buat Tugas Baru</h3>
+                <!-- Input tersembunyi untuk menyimpan ID tugas yang sedang diedit -->
+                <input type="hidden" id="task-edit-id">
+                <textarea id="task-input" placeholder="Tuliskan tugasmu di sini..." required></textarea>
+                <div class="form-controls">
+                    <select id="priority-input">
+                        <option value="low">Prioritas Rendah</option>
+                        <option value="medium" selected>Prioritas Sedang</option>
+                        <option value="high">Prioritas Tinggi</option>
+                    </select>
+                    <input type="date" id="due-date-input" required>
+                    <button type="submit" class="submit-btn" id="submit-task-btn">Tambah Tugas</button>
+                </div>
+            </form>
+
+            <div class="filter-section">
+                <h3>Filter Tugas</h3>
+                <div class="filter-controls">
+                    <label for="filter-date">Tampilkan tugas untuk tanggal:</label>
+                    <input type="date" id="filter-date">
+                    <button id="show-all-btn">Tampilkan Semua</button>
+                </div>
+            </div>
+
+            <div class="list-section">
+                <h2>To Do</h2>
+                <ul id="todo-list" class="task-list">
+                </ul>
+            </div>
+
+            <div class="list-section">
+                <h2>Done</h2>
+                <ul id="done-list" class="task-list">
+                </ul>
+            </div>
+
+            <button id="delete-all-btn">Hapus Semua Tugas</button>
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
