@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <input type="checkbox" class="task-checkbox" ${task.status === 'done' ? 'checked' : ''}>
                 <div class="task-content">
                     <p>${task.text}</p>
-                    <small class="due-date">deadline : ${new Date(task.dueDate).toLocaleDateString('id-ID', {day: '2-digit', month: 'long', year: 'numeric'})}</small>
+                    <small class="due-date">Tenggat: ${new Date(task.dueDate).toLocaleDateString('id-ID', {day: '2-digit', month: 'long', year: 'numeric'})}</small>
                 </div>
                 <div class="task-actions">
                     <button class="action-btn edit-btn" title="Edit Tugas">✏️</button>
@@ -176,8 +176,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
 
     function setupProfile() {
-        let userName = localStorage.getItem('todo_username') || 'Pengguna Baru';
-        let userJob = localStorage.getItem('todo_userjob') || 'Pekerjaan';
+        let userName = localStorage.getItem('todo_username') || 'Ilya Petrov'; // Default nama
+        let userJob = localStorage.getItem('todo_userjob') || 'Digital Marketing'; // Default pekerjaan
         updateProfileDisplay(userName, userJob);
     }
     function askForProfileInfo() {
@@ -195,8 +195,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function updateTime() {
         const now = new Date();
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-        timeDisplay.textContent = now.toLocaleDateString('id-ID', options);
+        const dateOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+        const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+        // Format waktu agar ada baris baru
+        timeDisplay.innerHTML = `${now.toLocaleDateString('en-GB', dateOptions)}<br>${now.toLocaleTimeString('en-GB', timeOptions)}`;
     }
 
     filterDateInput.addEventListener('input', () => {
@@ -222,16 +224,11 @@ document.addEventListener('DOMContentLoaded', () => {
         today.setHours(0, 0, 0, 0); 
     
         document.querySelectorAll('.task-item').forEach(taskItem => {
-            const dueDate = new Date(taskItem.dataset.dueDate);    
-             const dueDateElement = taskItem.querySelector('.due-date');
-         
-
+            const dueDate = new Date(taskItem.dataset.dueDate);
             if (dueDate < today && !taskItem.classList.contains('done')) {
                 taskItem.classList.add('overdue');
-                dueDateElement.textContent = `${dueDateElement.textContent} (overdue)`;
             } else {
                 taskItem.classList.remove('overdue');
-                 dueDateElement.textContent = dueDateElement.textContent.replace(' (overdue)', '');
             }
         });
     }

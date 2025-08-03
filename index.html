@@ -11,20 +11,25 @@
 <body>
 
     <div class="app-container">
+        <!-- PERUBAHAN PADA HEADER -->
         <header class="header" id="profile-header">
-            <div id="profile">
-                <h2 id="profile-name">Nama Pengguna</h2>
-                <p id="profile-job">Pekerjaan</p>
+            <div id="profile" class="profile-container">
+                <!-- Menambahkan elemen gambar -->
+                <img src="https://placehold.co/40x40/EFEFEF/333?text=Y" alt="Foto Profil" class="profile-pic">
+                <div class="profile-info">
+                    <h2 id="profile-name">Name</h2>
+                    <p id="profile-job">Role</p>
+                </div>
             </div>
             <div id="time-display">
                 <p>Memuat waktu...</p>
             </div>
         </header>
+        <!-- AKHIR PERUBAHAN HEADER -->
 
         <main>
             <form id="todo-form">
                 <h3>Buat Tugas Baru</h3>
-                <!-- Input tersembunyi untuk menyimpan ID tugas yang sedang diedit -->
                 <input type="hidden" id="task-edit-id">
                 <textarea id="task-input" placeholder="Tuliskan tugasmu di sini..." required></textarea>
                 <div class="form-controls">
@@ -33,8 +38,10 @@
                         <option value="medium" selected>Prioritas Sedang</option>
                         <option value="high">Prioritas Tinggi</option>
                     </select>
-                    <label for="due-date-input" id="deadline-label">Deadline : </label>
-                    <input type="date" id="due-date-input" required>
+                    <div class="date-wrapper">
+                        <label for="due-date-input">Tenggat:</label>
+                        <input type="date" id="due-date-input" required>
+                    </div>
                     <button type="submit" class="submit-btn" id="submit-task-btn">Tambah Tugas</button>
                 </div>
             </form>
