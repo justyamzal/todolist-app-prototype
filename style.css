@@ -66,11 +66,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    
-
 }
-
-
 
 #time-display {
     text-align: right;
