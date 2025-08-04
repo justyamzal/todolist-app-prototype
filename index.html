@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi To-Do List</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" xintegrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -14,14 +14,9 @@
     <div class="app-container">
         <header class="header" id="profile-header">
             <div id="profile">
-                <!-- Menambahkan elemen gambar -->
-                <!-- <img src="https://placehold.co/40x40/EFEFEF/333?text=Y" alt="Foto Profil" class="profile-pic"> -->
-                
                 <div class="profile-pic">
                     <i class="fa-regular fa-user"></i>
                 </div>
-                
-
                 <div class="profile-info">
                     <h2 id="profile-name">Nama Pengguna</h2>
                     <p id="profile-job">Pekerjaan</p>
@@ -33,16 +28,23 @@
         </header>
 
         <main>
+            <!-- BAGIAN BARU: Panel Dasbor Prioritas -->
+            <section class="dashboard-grid" id="dashboard-grid">
+                <!-- Kartu dasbor akan diisi oleh JavaScript -->
+            </section>
+            <!-- AKHIR BAGIAN BARU -->
+
             <form id="todo-form">
                 <h3>Buat Tugas Baru</h3>
-                <!-- Input tersembunyi untuk menyimpan ID tugas yang sedang diedit -->
                 <input type="hidden" id="task-edit-id">
                 <textarea id="task-input" placeholder="Tuliskan tugasmu di sini..." required></textarea>
                 <div class="form-controls">
+                    <!-- PERUBAHAN: Menambahkan Opsi "Urgent" -->
                     <select id="priority-input">
                         <option value="low">Prioritas Rendah</option>
                         <option value="medium" selected>Prioritas Sedang</option>
                         <option value="high">Prioritas Tinggi</option>
+                        <!-- <option value="urgent">Prioritas Mendesak</option> -->
                     </select>
                     <label for="due-date-input" id="deadline-label">Deadline : </label>
                     <input type="date" id="due-date-input" required>

@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const profileHeader = document.getElementById('profile-header');
     const profileNameEl = document.getElementById('profile-name');
     const profileJobEl = document.getElementById('profile-job');
+    const dashboardGrid = document.getElementById('dashboard-grid');
     const todoForm = document.getElementById('todo-form');
     const taskInput = document.getElementById('task-input');
     const priorityInput = document.getElementById('priority-input');
@@ -17,15 +18,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskEditIdInput = document.getElementById('task-edit-id');
     const submitTaskBtn = document.getElementById('submit-task-btn');
 
-    // 'tasks' tetap menjadi sumber data utama.
     let tasks = [];
 
-    // Fungsi untuk menyimpan tugas ke localStorage
     function saveTasks() {
         localStorage.setItem('todo_tasks', JSON.stringify(tasks));
     }
 
-    // --- DIPERBARUI: Fungsi renderTasks sekarang menyertakan tombol Edit & Delete ---
+    // --- PERUBAHAN: Logika renderDashboard diperbarui ---
+    function renderDashboard() {
+        const totalTasks = tasks.length;
+        const doneTasks = tasks.filter(task => task.status === 'done').length;
+        
+        // Menghitung persentase, hindari pembagian dengan nol
+        const percentageDone = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+
+        // Menghitung jumlah tugas yang belum selesai per prioritas
+        const highNotDone = tasks.filter(task => task.priority === 'high' && task.status !== 'done').length;
+        const mediumNotDone = tasks.filter(task => task.priority === 'medium' && task.status !== 'done').length;
+        const lowNotDone = tasks.filter(task => task.priority === 'low' && task.status !== 'done').length;
+
+        dashboardGrid.innerHTML = `
+            <div class="dashboard-card percentage">
+                <div class="title">Tugas Selesai</div>
+                <div class="value">${percentageDone}%</div>
+            </div>
+            <div class="dashboard-card high">
+                <div class="title"><span class="dot"></span>High</div>
+                <div class="value">${highNotDone}</div>
+            </div>
+            <div class="dashboard-card medium">
+                <div class="title"><span class="dot"></span>Medium</div>
+                <div class="value">${mediumNotDone}</div>
+            </div>
+            <div class="dashboard-card low">
+                <div class="title"><span class="dot"></span>Low</div>
+                <div class="value">${lowNotDone}</div>
+            </div>
+        `;
+    }
+
+    function renderUI() {
+        renderTasks();
+        renderDashboard();
+    }
+
     function renderTasks() {
         todoList.innerHTML = '';
         doneList.innerHTML = '';
@@ -63,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
         checkOverdueTasks();
     }
     
-    // --- DIPERBARUI: Fungsi submit form sekarang bisa menangani 'add' dan 'edit' ---
     todoForm.addEventListener('submit', (event) => {
         event.preventDefault();
         const taskText = taskInput.value.trim();
@@ -96,11 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         saveTasks();
-        renderTasks();
+        renderUI();
         resetForm();
     });
 
-    // Fungsi untuk mereset form ke mode 'add'
     function resetForm() {
         todoForm.reset();
         dueDateInput.valueAsDate = new Date();
@@ -109,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
         taskInput.focus();
     }
 
-    // --- DIPERBARUI: Event listener utama untuk menangani semua aksi di list ---
     document.querySelector('.app-container').addEventListener('click', (event) => {
         const target = event.target;
         const taskItem = target.closest('.task-item');
@@ -123,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (task) {
                 task.status = target.checked ? 'done' : 'todo';
                 saveTasks();
-                renderTasks();
+                renderUI();
             }
         }
 
@@ -145,29 +178,26 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 tasks = tasks.filter(t => t.id !== taskId);
                 saveTasks();
-                renderTasks();
+                renderUI();
             }, 400);
         }
     });
 
-    // --- PERBAIKAN PADA FUNGSI "HAPUS SEMUA TUGAS" ---
     deleteAllBtn.addEventListener('click', () => {
-        // Hapus dialog 'confirm()' agar bekerja di Live Preview
         if (tasks.length > 0) {
-            tasks = []; // Langsung kosongkan array tugas
+            tasks = [];
             saveTasks();
-            renderTasks();
+            renderUI();
         }
     });
     
-    // --- FUNGSI INISIALISASI & FUNGSI BANTU LAINNYA ---
     function initializeApp() {
         setupProfile();
         const savedTasks = localStorage.getItem('todo_tasks');
         if (savedTasks) {
             tasks = JSON.parse(savedTasks);
         }
-        renderTasks();
+        renderUI();
         dueDateInput.valueAsDate = new Date();
         updateTime();
         setInterval(updateTime, 1000);
@@ -175,9 +205,20 @@ document.addEventListener('DOMContentLoaded', () => {
     
     initializeApp();
 
+    // Fungsi-fungsi lainnya tidak berubah
+    function setupProfile() { /* ... */ }
+    function askForProfileInfo() { /* ... */ }
+    function updateProfileDisplay(name, job) { /* ... */ }
+    profileHeader.addEventListener('click', askForProfileInfo);
+    function updateTime() { /* ... */ }
+    filterDateInput.addEventListener('input', () => { /* ... */ });
+    showAllBtn.addEventListener('click', () => { /* ... */ });
+    function checkOverdueTasks() { /* ... */ }
+
+    // Salin fungsi yang tidak berubah dari kode sebelumnya ke sini
     function setupProfile() {
-        let userName = localStorage.getItem('todo_username') || 'Username'; // Default nama
-        let userJob = localStorage.getItem('todo_userjob') || 'Jobdesk'; // Default pekerjaan
+        let userName = localStorage.getItem('todo_username') || 'Username';
+        let userJob = localStorage.getItem('todo_userjob') || 'Jobdesk';
         updateProfileDisplay(userName, userJob);
     }
     function askForProfileInfo() {
@@ -191,16 +232,12 @@ document.addEventListener('DOMContentLoaded', () => {
         profileNameEl.textContent = name;
         profileJobEl.textContent = job;
     }
-    profileHeader.addEventListener('click', askForProfileInfo);
-    
     function updateTime() {
         const now = new Date();
         const dateOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
         const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
-        // Format waktu agar ada baris baru
         timeDisplay.innerHTML = `${now.toLocaleDateString('en-GB', dateOptions)}<br>${now.toLocaleTimeString('en-GB', timeOptions)}`;
     }
-
     filterDateInput.addEventListener('input', () => {
         const filterValue = filterDateInput.value;
         document.querySelectorAll('.task-item').forEach(task => {
@@ -211,18 +248,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
     showAllBtn.addEventListener('click', () => {
         filterDateInput.value = '';
         document.querySelectorAll('.task-item').forEach(task => {
             task.style.display = 'flex';
         });
     });
-
     function checkOverdueTasks() {
         const today = new Date();
         today.setHours(0, 0, 0, 0); 
-    
         document.querySelectorAll('.task-item').forEach(taskItem => {
             const dueDate = new Date(taskItem.dataset.dueDate);
             if (dueDate < today && !taskItem.classList.contains('done')) {
