@@ -217,9 +217,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Salin fungsi yang tidak berubah dari kode sebelumnya ke sini
     function setupProfile() {
-        let userName = localStorage.getItem('todo_username') || 'Username';
-        let userJob = localStorage.getItem('todo_userjob') || 'Jobdesk';
-        updateProfileDisplay(userName, userJob);
+        // let userName = localStorage.getItem('todo_username') || `Username`;
+        // let userJob = localStorage.getItem('todo_userjob') || 'jobdesk';
+        // updateProfileDisplay(userName, userJob);
+                let userName = localStorage.getItem('todo_username');
+        let userJob = localStorage.getItem('todo_userjob');
+        if (!userName) {
+            // Jika belum diset, tampilkan ikon pen dan teks username
+            profileNameEl.innerHTML = 'username <i style="font-size: 16px;" class="fa-solid fa-pen"></i> ';
+        } else {
+            profileNameEl.textContent = userName;
+        }
+        profileJobEl.textContent = userJob || 'jobdesk';
+
     }
     function askForProfileInfo() {
         let newName = prompt("Masukkan nama lengkap Anda:", localStorage.getItem('todo_username') || "");
