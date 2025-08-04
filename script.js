@@ -43,15 +43,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="value">${percentageDone}%</div>
             </div>
             <div class="dashboard-card high">
-                <div class="title"><span class="dot"></span>High</div>
+                <div class="title"><span class="dot"></span>Prioritas Tinggi</div>
                 <div class="value">${highNotDone}</div>
             </div>
             <div class="dashboard-card medium">
-                <div class="title"><span class="dot"></span>Medium</div>
+                <div class="title"><span class="dot"></span>Prioritas Sedang</div>
                 <div class="value">${mediumNotDone}</div>
             </div>
             <div class="dashboard-card low">
-                <div class="title"><span class="dot"></span>Low</div>
+                <div class="title"><span class="dot"></span>Prioritas Rendah</div>
                 <div class="value">${lowNotDone}</div>
             </div>
         `;
