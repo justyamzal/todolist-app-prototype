@@ -45,8 +45,28 @@ body {
     color: #1a1a1a;
 }
 
+
+#profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+
 #profile p {
     color: #666;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ccc;
+    /* border: 1px solid #ccc; */
+    object-fit: cover; /* Memastikan gambar tidak gepeng */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #time-display {

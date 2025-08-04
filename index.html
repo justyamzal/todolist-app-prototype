@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi To-Do List</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -13,8 +16,16 @@
     <div class="app-container">
         <header class="header" id="profile-header">
             <div id="profile">
-                <h2 id="profile-name">Nama Pengguna</h2>
-                <p id="profile-job">Pekerjaan</p>
+                <!-- Menambahkan elemen gambar -->
+                <!-- <img src="https://placehold.co/40x40/EFEFEF/333?text=Y" alt="Foto Profil" class="profile-pic"> -->
+                <div class="profile-pic">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+
+                <div class="profil-info">
+                    <h2 id="profile-name">Nama Pengguna</h2>
+                    <p id="profile-job">Pekerjaan</p>
+                </div>
             </div>
             <div id="time-display">
                 <p>Memuat waktu...</p>
