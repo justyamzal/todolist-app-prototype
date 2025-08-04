@@ -6,30 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi To-Do List</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
 
     <div class="app-container">
-        <!-- PERUBAHAN PADA HEADER -->
         <header class="header" id="profile-header">
-            <div id="profile" class="profile-container">
+            <div id="profile">
                 <!-- Menambahkan elemen gambar -->
-                <img src="https://placehold.co/40x40/EFEFEF/333?text=Y" alt="Foto Profil" class="profile-pic">
+                <!-- <img src="https://placehold.co/40x40/EFEFEF/333?text=Y" alt="Foto Profil" class="profile-pic"> -->
+                
+                <div class="profile-pic">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                
+
                 <div class="profile-info">
-                    <h2 id="profile-name">Name</h2>
-                    <p id="profile-job">Role</p>
+                    <h2 id="profile-name">Nama Pengguna</h2>
+                    <p id="profile-job">Pekerjaan</p>
                 </div>
             </div>
             <div id="time-display">
                 <p>Memuat waktu...</p>
             </div>
         </header>
-        <!-- AKHIR PERUBAHAN HEADER -->
 
         <main>
             <form id="todo-form">
                 <h3>Buat Tugas Baru</h3>
+                <!-- Input tersembunyi untuk menyimpan ID tugas yang sedang diedit -->
                 <input type="hidden" id="task-edit-id">
                 <textarea id="task-input" placeholder="Tuliskan tugasmu di sini..." required></textarea>
                 <div class="form-controls">
@@ -38,10 +44,8 @@
                         <option value="medium" selected>Prioritas Sedang</option>
                         <option value="high">Prioritas Tinggi</option>
                     </select>
-                    <div class="date-wrapper">
-                        <label for="due-date-input">Tenggat:</label>
-                        <input type="date" id="due-date-input" required>
-                    </div>
+                    <label for="due-date-input" id="deadline-label">Deadline : </label>
+                    <input type="date" id="due-date-input" required>
                     <button type="submit" class="submit-btn" id="submit-task-btn">Tambah Tugas</button>
                 </div>
             </form>
